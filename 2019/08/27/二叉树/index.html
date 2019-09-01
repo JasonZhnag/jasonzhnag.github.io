@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    }
+  };
+</script>
+
+  <meta name="description" content="基本操作 FromParentTo指来自父亲的指针  非递归版遍历  先序遍历  一直沿最左路深入，一路上将右子树推入栈">
+<meta name="keywords" content="DSA笔记,二叉树">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二叉树">
+<meta property="og:url" content="http://yoursite.com/2019/08/27/二叉树/index.html">
+<meta property="og:site_name" content="Toheart">
+<meta property="og:description" content="基本操作 FromParentTo指来自父亲的指针  非递归版遍历  先序遍历  一直沿最左路深入，一路上将右子树推入栈">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-01T08:25:58.357Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="二叉树">
+<meta name="twitter:description" content="基本操作 FromParentTo指来自父亲的指针  非递归版遍历  先序遍历  一直沿最左路深入，一路上将右子树推入栈">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/08/27/二叉树/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>二叉树 | Toheart</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Toheart</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/27/二叉树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Toheart">
+      <meta itemprop="description" content="北斗酌美酒，劝龙各一觞。">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toheart">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">二叉树
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-08-27 00:00:00" itemprop="dateCreated datePublished" datetime="2019-08-27T00:00:00+08:00">2019-08-27</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-09-01 16:25:58" itemprop="dateModified" datetime="2019-09-01T16:25:58+08:00">2019-09-01</time>
+              </span>
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><ul>
+<li><p>FromParentTo指来自父亲的指针</p>
+</li>
+<li><p>非递归版遍历</p>
+<ul>
+<li><p>先序遍历</p>
+<ul>
+<li>一直沿最左路深入，一路上将右子树推入栈<a id="more"></a>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//从当前节点出发，沿左分支不断深入，直至没有左分支的节点；沿途节点遇到后立即访问</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> VST&gt; <span class="comment">//元素类型、操作器</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">visitAlongLeftBranch</span> <span class="params">( BinNodePosi(T) x, VST&amp; visit, Stack&lt;BinNodePosi(T)&gt;&amp; S )</span> </span>&#123;</span><br><span class="line">   <span class="keyword">while</span> ( x ) &#123;</span><br><span class="line">      visit ( x-&gt;data ); <span class="comment">//访问当前节点</span></span><br><span class="line">      S.push ( x-&gt;rc ); <span class="comment">//右孩子入栈暂存（可优化：通过判断，避免空的右孩子入栈）</span></span><br><span class="line">      x = x-&gt;lc;  <span class="comment">//沿左分支深入一层</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> VST&gt; <span class="comment">//元素类型、操作器</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">travPre_I2</span> <span class="params">( BinNodePosi(T) x, VST&amp; visit )</span> </span>&#123; <span class="comment">//二叉树先序遍历算法（迭代版#2）</span></span><br><span class="line">   Stack&lt;BinNodePosi(T)&gt; S; <span class="comment">//辅助栈</span></span><br><span class="line">   <span class="keyword">while</span> ( <span class="literal">true</span> ) &#123;</span><br><span class="line">      visitAlongLeftBranch ( x, visit, S ); <span class="comment">//从当前节点出发，逐批访问</span></span><br><span class="line">      <span class="keyword">if</span> ( S.empty() ) <span class="keyword">break</span>; <span class="comment">//直到栈空</span></span><br><span class="line">      x = S.pop(); <span class="comment">//弹出下一批的起点</span></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>中序遍历</p>
+<ul>
+<li>在访问根节点前把左子树访问完</li>
+<li>从最左侧底端出发，沿途一直入栈，最后出栈转向右子树</li>
+<li>直接后继<ul>
+<li>右子树中尽量靠左的叶子或将当前节点包含于左子树中的最低祖先<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> VST&gt; <span class="comment">//元素类型、操作器</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">travIn_I3</span> <span class="params">( BinNodePosi(T) x, VST&amp; visit )</span> </span>&#123; <span class="comment">//二叉树中序遍历算法（迭代版#3，无需辅助栈）</span></span><br><span class="line">   <span class="keyword">bool</span> backtrack = <span class="literal">false</span>; <span class="comment">//前一步是否刚从右子树回溯——省去栈，仅O(1)辅助空间</span></span><br><span class="line">   <span class="keyword">while</span> ( <span class="literal">true</span> )</span><br><span class="line">      <span class="keyword">if</span> ( !backtrack &amp;&amp; HasLChild ( *x ) ) <span class="comment">//若有左子树且不是刚刚回溯，则</span></span><br><span class="line">         x = x-&gt;lc; <span class="comment">//深入遍历左子树</span></span><br><span class="line">      <span class="keyword">else</span> &#123; <span class="comment">//否则——无左子树或刚刚回溯（相当于无左子树）</span></span><br><span class="line">         visit ( x-&gt;data ); <span class="comment">//访问该节点</span></span><br><span class="line">         <span class="keyword">if</span> ( HasRChild ( *x ) ) &#123; <span class="comment">//若其右子树非空，则</span></span><br><span class="line">            x = x-&gt;rc; <span class="comment">//深入右子树继续遍历</span></span><br><span class="line">            backtrack = <span class="literal">false</span>; <span class="comment">//并关闭回溯标志</span></span><br><span class="line">         &#125; <span class="keyword">else</span> &#123; <span class="comment">//若右子树空，则</span></span><br><span class="line">            <span class="keyword">if</span> ( ! ( x = x-&gt;succ() ) ) <span class="keyword">break</span>; <span class="comment">//回溯（含抵达末节点时的退出返回）</span></span><br><span class="line">            backtrack = <span class="literal">true</span>; <span class="comment">//并设置回溯标志</span></span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>后序遍历</p>
+<ul>
+<li>访问该节点，遍历右兄弟子树，回溯到祖先</li>
+<li>最高左侧可见叶节点<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="comment">//在以S栈顶节点为根的子树中，找到最高左侧可见叶节点</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">gotoHLVFL</span> <span class="params">( Stack&lt;BinNodePosi(T)&gt;&amp; S )</span> </span>&#123; <span class="comment">//沿途所遇节点依次入栈</span></span><br><span class="line">   <span class="keyword">while</span> ( BinNodePosi(T) x = S.top() ) <span class="comment">//自顶而下，反复检查当前节点（即栈顶）</span></span><br><span class="line">      <span class="keyword">if</span> ( HasLChild ( *x ) ) &#123; <span class="comment">//尽可能向左</span></span><br><span class="line">         <span class="keyword">if</span> ( HasRChild ( *x ) ) S.push ( x-&gt;rc ); <span class="comment">//若有右孩子，优先入栈</span></span><br><span class="line">         S.push ( x-&gt;lc ); <span class="comment">//然后才转至左孩子</span></span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="comment">//实不得已</span></span><br><span class="line">         S.push ( x-&gt;rc ); <span class="comment">//才向右</span></span><br><span class="line">   S.pop(); <span class="comment">//返回之前，弹出栈顶的空节点</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> VST&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">travPost_I</span> <span class="params">( BinNodePosi(T) x, VST&amp; visit )</span> </span>&#123; <span class="comment">//二叉树的后序遍历（迭代版）</span></span><br><span class="line">   Stack&lt;BinNodePosi(T)&gt; S; <span class="comment">//辅助栈</span></span><br><span class="line">   <span class="keyword">if</span> ( x ) S.push ( x ); <span class="comment">//根节点入栈</span></span><br><span class="line">   <span class="keyword">while</span> ( !S.empty() ) &#123;</span><br><span class="line">      <span class="keyword">if</span> ( S.top() != x-&gt;parent ) <span class="comment">//若栈顶非当前节点之父（则必为其右兄），此时需</span></span><br><span class="line">         gotoHLVFL ( S ); <span class="comment">//在以其右兄为根之子树中，找到HLVFL（相当于递归深入其中）</span></span><br><span class="line">      x = S.pop(); visit ( x-&gt;data ); <span class="comment">//弹出栈顶（即前一节点之后继），并访问之</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="编码树"><a href="#编码树" class="headerlink" title="编码树"></a>编码树</h2><ul>
+<li>最优编码树<ul>
+<li>双子性</li>
+<li>层次性<ul>
+<li>叶节点深度之差不超过1</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Huffman编码树</li>
+</ul>
+<h2 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h2><ul>
+<li><p>中序遍历单调非降</p>
+</li>
+<li><p>二叉平衡搜索树</p>
+<ul>
+<li><p>AVL树</p>
+<ul>
+<li><p>插入操作</p>
+<ul>
+<li><p>g为最低的失衡节点，p为g孩子，v为p孩子，可由tallerchild()由g找到p、v</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> tallerChild(x) ( \</span></span><br><span class="line">stature( (x)-&gt;lc ) &gt; stature( (x)-&gt;rc ) ? (x)-&gt;lc : ( <span class="comment">/*左高*/</span> \</span><br><span class="line">stature( (x)-&gt;lc ) &lt; stature( (x)-&gt;rc ) ? (x)-&gt;rc : ( <span class="comment">/*右高*/</span> \</span><br><span class="line">IsLChild( * (x) ) ? (x)-&gt;lc : (x)-&gt;rc <span class="comment">/*等高：与父亲x同侧者（zIg-zIg或zAg-zAg）优先*/</span> \</span><br><span class="line">) \</span><br><span class="line">) \</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>三连同侧/子孙异侧</p>
+</li>
+<li><p>重平衡后g高度不变，不会继续传导</p>
+</li>
+</ul>
+</li>
+<li><p>删除操作</p>
+<ul>
+<li>单旋 三连同侧</li>
+<li>双旋 子孙异侧</li>
+</ul>
+</li>
+<li><p>3 + 4重平衡</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; BinNodePosi(T) BST&lt;T&gt;::connect34 (</span><br><span class="line">   BinNodePosi(T) a, BinNodePosi(T) b, BinNodePosi(T) c,</span><br><span class="line">   BinNodePosi(T) T0, BinNodePosi(T) T1, BinNodePosi(T) T2, BinNodePosi(T) T3</span><br><span class="line">) &#123;</span><br><span class="line">   <span class="comment">//*DSA*/print(a); print(b); print(c); printf("\n");</span></span><br><span class="line">   a-&gt;lc = T0; <span class="keyword">if</span> ( T0 ) T0-&gt;parent = a;</span><br><span class="line">   a-&gt;rc = T1; <span class="keyword">if</span> ( T1 ) T1-&gt;parent = a; updateHeight ( a );</span><br><span class="line">   c-&gt;lc = T2; <span class="keyword">if</span> ( T2 ) T2-&gt;parent = c;</span><br><span class="line">   c-&gt;rc = T3; <span class="keyword">if</span> ( T3 ) T3-&gt;parent = c; updateHeight ( c );</span><br><span class="line">   b-&gt;lc = a; a-&gt;parent = b;</span><br><span class="line">   b-&gt;rc = c; c-&gt;parent = b; updateHeight ( b );</span><br><span class="line">   <span class="keyword">return</span> b; <span class="comment">//该子树新的根节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; BinNodePosi(T) BST&lt;T&gt;::rotateAt ( BinNodePosi(T) v ) &#123; <span class="comment">//v为非空孙辈节点</span></span><br><span class="line">   <span class="comment">/*DSA*/</span><span class="keyword">if</span> ( !v ) &#123; <span class="built_in">printf</span> ( <span class="string">"\a\nFail to rotate a null node\n"</span> ); <span class="built_in">exit</span> ( <span class="number">-1</span> ); &#125;</span><br><span class="line">   BinNodePosi(T) p = v-&gt;parent; BinNodePosi(T) g = p-&gt;parent; <span class="comment">//视v、p和g相对位置分四种情况</span></span><br><span class="line">   <span class="keyword">if</span> ( IsLChild ( *p ) ) <span class="comment">/* zig */</span></span><br><span class="line">      <span class="keyword">if</span> ( IsLChild ( *v ) ) &#123; <span class="comment">/* zig-zig */</span> <span class="comment">//*DSA*/printf("\tzIg-zIg: ");</span></span><br><span class="line">         p-&gt;parent = g-&gt;parent; <span class="comment">//向上联接</span></span><br><span class="line">         <span class="keyword">return</span> connect34 ( v, p, g, v-&gt;lc, v-&gt;rc, p-&gt;rc, g-&gt;rc );</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123; <span class="comment">/* zig-zag */</span>  <span class="comment">//*DSA*/printf("\tzIg-zAg: ");</span></span><br><span class="line">         v-&gt;parent = g-&gt;parent; <span class="comment">//向上联接</span></span><br><span class="line">         <span class="keyword">return</span> connect34 ( p, v, g, p-&gt;lc, v-&gt;lc, v-&gt;rc, g-&gt;rc );</span><br><span class="line">      &#125;</span><br><span class="line">   <span class="keyword">else</span>  <span class="comment">/* zag */</span></span><br><span class="line">      <span class="keyword">if</span> ( IsRChild ( *v ) ) &#123; <span class="comment">/* zag-zag */</span> <span class="comment">//*DSA*/printf("\tzAg-zAg: ");</span></span><br><span class="line">         p-&gt;parent = g-&gt;parent; <span class="comment">//向上联接</span></span><br><span class="line">         <span class="keyword">return</span> connect34 ( g, p, v, g-&gt;lc, p-&gt;lc, v-&gt;lc, v-&gt;rc );</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123; <span class="comment">/* zag-zig */</span>  <span class="comment">//*DSA*/printf("\tzAg-zIg: ");</span></span><br><span class="line">         v-&gt;parent = g-&gt;parent; <span class="comment">//向上联接</span></span><br><span class="line">         <span class="keyword">return</span> connect34 ( g, v, p, g-&gt;lc, v-&gt;lc, v-&gt;rc, p-&gt;rc );</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>完整代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">   <span class="keyword">int</span> key;</span><br><span class="line">   <span class="keyword">int</span> height;</span><br><span class="line">   Node *Left;</span><br><span class="line">   Node *Right;</span><br><span class="line">   Node(<span class="keyword">int</span> key = <span class="number">0</span>)</span><br><span class="line">   &#123;</span><br><span class="line">      <span class="keyword">this</span>-&gt;key = key;</span><br><span class="line">      <span class="keyword">this</span>-&gt;height = <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">this</span>-&gt;Left = <span class="keyword">this</span>-&gt;Right = <span class="literal">nullptr</span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AVL</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">   Node *Header;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">destroy</span><span class="params">(Node *node)</span></span>;</span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">getHeight</span><span class="params">(Node *node)</span></span>;</span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">getBalance</span><span class="params">(Node *node)</span></span>;</span><br><span class="line">   <span class="function">Node *<span class="title">insertReal</span><span class="params">(<span class="keyword">int</span> key, Node *node)</span></span>;</span><br><span class="line">   <span class="function">Node *<span class="title">findReal</span><span class="params">(<span class="keyword">int</span> key, Node *node)</span></span>;</span><br><span class="line">   <span class="function">Node *<span class="title">eraseReal</span><span class="params">(<span class="keyword">int</span> key, Node *node)</span></span>;</span><br><span class="line">   <span class="comment">//Node *searchIn(int key, Node *node);</span></span><br><span class="line">   <span class="function">Node *<span class="title">rotateAt</span><span class="params">(Node *node, <span class="keyword">int</span> balance)</span></span>;</span><br><span class="line">   <span class="function">Node *<span class="title">connect34</span><span class="params">(Node *a, Node *b, Node *c, Node *d1, Node *d2, Node *d3, Node *d4)</span></span>;</span><br><span class="line">   <span class="function">Node *<span class="title">tallerChild</span><span class="params">(Node *node)</span></span>;</span><br><span class="line">   <span class="function">Node *<span class="title">succ</span><span class="params">(Node *node)</span></span>;</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">inOrder</span><span class="params">(Node *node)</span></span>;</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">updateHeight</span><span class="params">(Node *node)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">   AVL();</span><br><span class="line">   ~AVL();</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> key)</span></span>;</span><br><span class="line">   <span class="function">Node *<span class="title">find</span><span class="params">(<span class="keyword">int</span> key)</span></span>;</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">erase</span><span class="params">(<span class="keyword">int</span> key)</span></span>;</span><br><span class="line">   <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> AVL::destroy(Node *node)</span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">if</span>(node == <span class="literal">nullptr</span>)</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">   destroy(node-&gt;Left);</span><br><span class="line">   destroy(node-&gt;Right);</span><br><span class="line">   <span class="keyword">delete</span> node;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> AVL::getHeight(Node *node)</span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">if</span>(node == <span class="literal">nullptr</span>)</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   <span class="keyword">return</span> node-&gt;height;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> AVL::updateHeight(Node *node)</span><br><span class="line">&#123;</span><br><span class="line">   node-&gt;height = <span class="number">1</span> + max(getHeight(node-&gt;Left), getHeight(node-&gt;Right));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> AVL::getBalance(Node *node)</span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">if</span>(node == <span class="literal">nullptr</span>)</span><br><span class="line">      <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">   <span class="keyword">return</span> getHeight(node-&gt;Left) - getHeight(node-&gt;Right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">AVL::AVL()</span><br><span class="line">&#123;</span><br><span class="line">   Header = <span class="keyword">new</span> Node(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">AVL::~AVL()</span><br><span class="line">&#123;</span><br><span class="line">   destroy(Header-&gt;Left);</span><br><span class="line">   <span class="keyword">delete</span> Header;</span><br><span class="line">   Header = <span class="literal">nullptr</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Node *AVL::connect34(Node *a, Node *b, Node *c, Node *d1, Node *d2, Node *d3, Node *d4)</span><br><span class="line">&#123;</span><br><span class="line">   a-&gt;Left = d1;</span><br><span class="line">   a-&gt;Right = d2;</span><br><span class="line">   updateHeight(a);</span><br><span class="line">   c-&gt;Left = d3;</span><br><span class="line">   c-&gt;Right = d4;</span><br><span class="line">   updateHeight(c);</span><br><span class="line">   b-&gt;Left = a;</span><br><span class="line">   b-&gt;Right = c;</span><br><span class="line">   updateHeight(b);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Node *AVL::tallerChild(Node *node)</span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">return</span> getHeight(node-&gt;Left) &gt;= getHeight(node-&gt;Right) ? node-&gt;Left : node-&gt;Right;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Node *AVL::rotateAt(Node *node, <span class="keyword">int</span> balance)</span><br><span class="line">&#123;</span><br><span class="line">   Node *p = tallerChild(node);</span><br><span class="line">   Node *v = tallerChild(p);</span><br><span class="line">   <span class="keyword">if</span>(balance &gt; <span class="number">1</span> &amp;&amp; getBalance(node-&gt;Left) &gt;= <span class="number">0</span>)</span><br><span class="line">   &#123;</span><br><span class="line">      <span class="keyword">return</span> connect34(v, p, node, v-&gt;Left, v-&gt;Right, p-&gt;Right, node-&gt;Right);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span>(balance &lt; <span class="number">-1</span> &amp;&amp; getBalance(node-&gt;Right) &lt;= <span class="number">0</span>)</span><br><span class="line">   &#123;</span><br><span class="line">      <span class="keyword">return</span> connect34(node, p, v, node-&gt;Left, p-&gt;Left, v-&gt;Left, v-&gt;Right);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span>(balance &gt; <span class="number">1</span> &amp;&amp; getBalance(node-&gt;Left) &lt; <span class="number">0</span>)</span><br><span class="line">   &#123;</span><br><span class="line">      <span class="keyword">return</span> connect34(p, v, node, p-&gt;Left, v-&gt;Left, v-&gt;Right, node-&gt;Right);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span>(balance &lt; <span class="number">-1</span> &amp;&amp; getBalance(node-&gt;Right) &gt; <span class="number">0</span>)</span><br><span class="line">   &#123;</span><br><span class="line">      <span class="keyword">return</span> connect34(node, v, p, node-&gt;Left, v-&gt;Left, v-&gt;Right, p-&gt;Right);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Node *AVL::insertReal(<span class="keyword">int</span> key, Node *node)</span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">if</span>(node == <span class="literal">nullptr</span>)</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> Node(key);</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">if</span>(key &lt; node-&gt;key)</span><br><span class="line">      node-&gt;Left = insertReal(key, node-&gt;Left);</span><br><span class="line">   <span class="keyword">else</span> <span class="keyword">if</span>(key &gt; node-&gt;key)</span><br><span class="line">      node-&gt;Right = insertReal(key, node-&gt;Right);</span><br><span class="line">   <span class="keyword">else</span></span><br><span class="line">      <span class="keyword">return</span> node;</span><br><span class="line"></span><br><span class="line">   node-&gt;height = <span class="number">1</span> + max(getHeight(node-&gt;Left), getHeight(node-&gt;Right));</span><br><span class="line"></span><br><span class="line">   <span class="keyword">int</span> balance = getBalance(node);</span><br><span class="line">   <span class="keyword">if</span>(balance &gt; <span class="number">1</span> || balance &lt; <span class="number">-1</span>)</span><br><span class="line">   &#123;</span><br><span class="line">      <span class="keyword">return</span> rotateAt(node, balance);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Node *AVL::findReal(<span class="keyword">int</span> key, Node *node)</span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">if</span>(node == <span class="literal">nullptr</span>)</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">   <span class="keyword">if</span>(key &lt; node-&gt;key)</span><br><span class="line">      <span class="keyword">return</span> findReal(key, node-&gt;Left);</span><br><span class="line">   <span class="keyword">else</span> <span class="keyword">if</span>(key &gt; node-&gt;key)</span><br><span class="line">      <span class="keyword">return</span> findReal(key, node-&gt;Right);</span><br><span class="line">   <span class="keyword">else</span></span><br><span class="line">      <span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Node *AVL::succ(Node *node)</span><br><span class="line">&#123;</span><br><span class="line">   Node *v = node-&gt;Right;</span><br><span class="line">   <span class="keyword">while</span>(v-&gt;Left)</span><br><span class="line">      v = v-&gt;Left;</span><br><span class="line">   <span class="keyword">return</span> v;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Node *AVL::eraseReal(<span class="keyword">int</span> key, Node *node)</span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">if</span>(node == <span class="literal">nullptr</span>)</span><br><span class="line">      <span class="keyword">return</span> node;</span><br><span class="line">   <span class="keyword">if</span>(key &lt; node-&gt;key)</span><br><span class="line">      node-&gt;Left = eraseReal(key, node-&gt;Left);</span><br><span class="line">   <span class="keyword">else</span> <span class="keyword">if</span>(key &gt; node-&gt;key)</span><br><span class="line">      node-&gt;Right = eraseReal(key, node-&gt;Right);</span><br><span class="line">   <span class="keyword">else</span> <span class="comment">//執行刪除操作</span></span><br><span class="line">   &#123;</span><br><span class="line">      <span class="keyword">if</span>(node-&gt;Left &amp;&amp; node-&gt;Right)</span><br><span class="line">      &#123;</span><br><span class="line">            Node *v = succ(node);</span><br><span class="line">            node-&gt;key = v-&gt;key;</span><br><span class="line">            node-&gt;Right = eraseReal(v-&gt;key, node-&gt;Right);   <span class="comment">// 問題轉化為刪除後繼節點</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">      &#123;</span><br><span class="line">            Node *t = node;</span><br><span class="line">            node = node-&gt;Left ? node-&gt;Left : node-&gt;Right;</span><br><span class="line">            <span class="keyword">delete</span> t;</span><br><span class="line">            <span class="keyword">if</span>(node == <span class="literal">nullptr</span>)</span><br><span class="line">               <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   updateHeight(node);</span><br><span class="line">   <span class="keyword">int</span> balance = getBalance(node);</span><br><span class="line">   <span class="keyword">if</span>(balance &gt; <span class="number">1</span> || balance &lt; <span class="number">-1</span>)</span><br><span class="line">   &#123;</span><br><span class="line">      <span class="keyword">return</span> rotateAt(node, balance);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> AVL::insert(<span class="keyword">int</span> key)</span><br><span class="line">&#123;</span><br><span class="line">   Header-&gt;Left = insertReal(key, Header-&gt;Left);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Node *AVL::find(<span class="keyword">int</span> key)</span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">return</span> findReal(key, Header-&gt;Left);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> AVL::erase(<span class="keyword">int</span> key)</span><br><span class="line">&#123;</span><br><span class="line">   Header-&gt;Left = eraseReal(key, Header-&gt;Left);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> AVL::inOrder(Node *node)</span><br><span class="line">&#123;</span><br><span class="line">   <span class="keyword">if</span>(node == <span class="literal">nullptr</span>)</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">   inOrder(node-&gt;Left);</span><br><span class="line">   <span class="built_in">cout</span> &lt;&lt; node-&gt;key &lt;&lt; <span class="string">" "</span>;</span><br><span class="line">   inOrder(node-&gt;Right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> AVL::print()</span><br><span class="line">&#123;</span><br><span class="line">   inOrder(Header-&gt;Left);</span><br><span class="line">   <span class="built_in">cout</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   AVL avl;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// test "insert"</span></span><br><span class="line">   avl.insert(<span class="number">7</span>);</span><br><span class="line">   avl.insert(<span class="number">2</span>);</span><br><span class="line">   avl.insert(<span class="number">1</span>); avl.insert(<span class="number">1</span>);</span><br><span class="line">   avl.insert(<span class="number">5</span>);</span><br><span class="line">   avl.insert(<span class="number">3</span>);</span><br><span class="line">   avl.insert(<span class="number">6</span>);</span><br><span class="line">   avl.insert(<span class="number">4</span>);</span><br><span class="line">   avl.insert(<span class="number">9</span>);</span><br><span class="line">   avl.insert(<span class="number">8</span>);</span><br><span class="line">   avl.insert(<span class="number">11</span>); avl.insert(<span class="number">11</span>);</span><br><span class="line">   avl.insert(<span class="number">10</span>);</span><br><span class="line">   avl.insert(<span class="number">12</span>);</span><br><span class="line">   avl.print(); <span class="comment">// 1 2 3 4 5 6 7 8 9 10 11 12</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">// test "find"</span></span><br><span class="line">   Node * p = <span class="literal">nullptr</span>;</span><br><span class="line">   <span class="built_in">cout</span> &lt;&lt; ((p = avl.find(<span class="number">2</span>)) ? p-&gt;key : <span class="number">-1</span>) &lt;&lt; <span class="built_in">endl</span>;   <span class="comment">//  2</span></span><br><span class="line">   <span class="built_in">cout</span> &lt;&lt; ((p = avl.find(<span class="number">100</span>)) ? p-&gt;key : <span class="number">-1</span>) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// -1</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">// test "erase"</span></span><br><span class="line">   avl.erase(<span class="number">1</span>);</span><br><span class="line">   avl.print(); <span class="comment">// 2 3 4 5 6 7 8 9 10 11 12</span></span><br><span class="line">   avl.erase(<span class="number">9</span>);</span><br><span class="line">   avl.print(); <span class="comment">// 2 3 4 5 6 7 8 10 11 12</span></span><br><span class="line">   avl.erase(<span class="number">11</span>);</span><br><span class="line">   avl.print(); <span class="comment">// 2 3 4 5 6 7 8 10 12</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/DSA笔记/" rel="tag"># DSA笔记</a>
+          
+            <a href="/tags/二叉树/" rel="tag"># 二叉树</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/26/堆/" rel="next" title="堆">
+                <i class="fa fa-chevron-left"></i> 堆
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+    <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Toheart">
+  
+  <p class="site-author-name" itemprop="name">Toheart</p>
+  <div class="site-description motion-element" itemprop="description">北斗酌美酒，劝龙各一觞。</div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">categories</span>
+        </a>
+      </div>
+    
+
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+
+
+
+
+  <div class="links-of-author motion-element">
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/JasonZhnag" title="GitHub &rarr; https://github.com/JasonZhnag" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.zhihu.com/people/gu-hao-ran-98" title="知乎 &rarr; https://www.zhihu.com/people/gu-hao-ran-98" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>知乎</a>
+      </span>
+    
+  </div>
+
+
+
+
+
+
+
+          
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本操作"><span class="nav-number">1.</span> <span class="nav-text">基本操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编码树"><span class="nav-number">2.</span> <span class="nav-text">编码树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉搜索树"><span class="nav-number">3.</span> <span class="nav-text">二叉搜索树</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Toheart</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.2.0"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.2.0"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// GET RESPONSIVE HEIGHT PASSED FROM IFRAME
+
+window.addEventListener("message", function(e) {
+  var data = e.data;
+  if ((typeof data === 'string') && (data.indexOf('ciu_embed') > -1)) {
+    var featureID = data.split(':')[1];
+    var height = data.split(':')[2];
+    $(`iframe[data-feature=${featureID}]`).height(parseInt(height) + 30);
+  }
+}, false);
+</script>
+
+
+
+
+
+
+
+
+  
+
+</body>
+</html>
