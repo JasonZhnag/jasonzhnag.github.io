@@ -94,18 +94,18 @@
   };
 </script>
 
-  <meta name="description" content="从yield到异步IOyield理解 迭代器  有next()方法的对象会前进到下一结果。   生成器  含yield会被特地编译为生成器，当函数被调用时，返回一个生成器对象，生成器函数在生成值后会挂起并暂停 next即为跳入函数中继续迭代，send则为跳入函数并将值传到yield所在的位置">
+  <meta name="description" content="从yield到异步IOyield理解 迭代器 有next()方法的对象会前进到下一结果。   生成器 含yield会被特地编译为生成器，当函数被调用时，返回一个生成器对象，生成器函数在生成值后会挂起并暂停 next即为跳入函数中继续迭代，send则为跳入函数并将值传到yield所在的位置">
 <meta name="keywords" content="Python,协程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从yield到异步IO">
 <meta property="og:url" content="http://yoursite.com/2019/08/20/从yield到异步IO/index.html">
 <meta property="og:site_name" content="Toheart">
-<meta property="og:description" content="从yield到异步IOyield理解 迭代器  有next()方法的对象会前进到下一结果。   生成器  含yield会被特地编译为生成器，当函数被调用时，返回一个生成器对象，生成器函数在生成值后会挂起并暂停 next即为跳入函数中继续迭代，send则为跳入函数并将值传到yield所在的位置">
+<meta property="og:description" content="从yield到异步IOyield理解 迭代器 有next()方法的对象会前进到下一结果。   生成器 含yield会被特地编译为生成器，当函数被调用时，返回一个生成器对象，生成器函数在生成值后会挂起并暂停 next即为跳入函数中继续迭代，send则为跳入函数并将值传到yield所在的位置">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-09-01T08:25:52.017Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="从yield到异步IO">
-<meta name="twitter:description" content="从yield到异步IOyield理解 迭代器  有next()方法的对象会前进到下一结果。   生成器  含yield会被特地编译为生成器，当函数被调用时，返回一个生成器对象，生成器函数在生成值后会挂起并暂停 next即为跳入函数中继续迭代，send则为跳入函数并将值传到yield所在的位置">
+<meta name="twitter:description" content="从yield到异步IOyield理解 迭代器 有next()方法的对象会前进到下一结果。   生成器 含yield会被特地编译为生成器，当函数被调用时，返回一个生成器对象，生成器函数在生成值后会挂起并暂停 next即为跳入函数中继续迭代，send则为跳入函数并将值传到yield所在的位置">
 
 
 
@@ -444,13 +444,11 @@
 
       
         <h1 id="从yield到异步IO"><a href="#从yield到异步IO" class="headerlink" title="从yield到异步IO"></a>从yield到异步IO</h1><h2 id="yield理解"><a href="#yield理解" class="headerlink" title="yield理解"></a>yield理解</h2><ul>
-<li><p>迭代器</p>
-<ul>
+<li>迭代器<ul>
 <li>有next()方法的对象会前进到下一结果。</li>
 </ul>
 </li>
-<li><p>生成器</p>
-<ul>
+<li>生成器<ul>
 <li>含yield会被特地编译为生成器，当函数被调用时，返回一个生成器对象，生成器函数在生成值后会挂起并暂停</li>
 <li>next即为跳入函数中继续迭代，send则为跳入函数并将值传到yield所在的位置<a id="more"></a></li>
 </ul>
@@ -483,7 +481,6 @@
 <li>功能<ul>
 <li>省略可迭代对象迭代步骤</li>
 <li>捕获异常<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">average_gen</span><span class="params">()</span>:</span></span><br><span class="line">    total = <span class="number">0</span></span><br><span class="line">    count = <span class="number">0</span></span><br><span class="line">    average = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        new_num = <span class="keyword">yield</span> average</span><br><span class="line">        <span class="keyword">if</span> new_num <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        count += <span class="number">1</span></span><br><span class="line">        total += new_num</span><br><span class="line">        average = total/count</span><br><span class="line">    <span class="keyword">return</span> total, count, average</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">proxy_gen</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        total, count, average = <span class="keyword">yield</span> <span class="keyword">from</span> average_gen()</span><br><span class="line">        print(<span class="string">"总共传入&#123;&#125;个数，&#123;&#125;，&#123;&#125;"</span>.format(count, total, average))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    calc_average = proxy_gen()</span><br><span class="line">    next(calc_average) <span class="comment">#预备生成器</span></span><br><span class="line">    print(calc_average.send(<span class="number">10</span>))</span><br><span class="line">    print(calc_average.send(<span class="number">20</span>))</span><br><span class="line">    print(calc_average.send(<span class="number">30</span>))</span><br><span class="line">    calc_average.send(<span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-
 </li>
 </ul>
 </li>
@@ -491,10 +488,8 @@
 </li>
 </ul>
 <h1 id="asyncio"><a href="#asyncio" class="headerlink" title="asyncio"></a>asyncio</h1><ul>
-<li><p>我的浅显理解是轮询，轮流挂起去继续其他函数的步骤。</p>
-</li>
-<li><p>我们使用asyncio.wait(tasks)来获取一个awaitable objects即可等待对象的集合(此处的aws是协程的列表)，并发运行传入的aws，同时通过yield from返回一个包含(done, pending)的元组，done表示已完成的任务列表，pending表示未完成的任务列表；如果使用asyncio.as_completed(tasks)则会按完成顺序生成协程的迭代器(常用于for循环中)，因此当你用它迭代时，会尽快得到每个可用的结果。【此外，当轮询到某个事件时(如taskIO_1())，直到遇到该任务中的yield from中断，开始处理下一个事件(如taskIO_2()))，当yield from后面的子生成器完成任务时，该事件才再次被唤醒】</p>
-</li>
+<li>我的浅显理解是轮询，轮流挂起去继续其他函数的步骤。</li>
+<li>我们使用asyncio.wait(tasks)来获取一个awaitable objects即可等待对象的集合(此处的aws是协程的列表)，并发运行传入的aws，同时通过yield from返回一个包含(done, pending)的元组，done表示已完成的任务列表，pending表示未完成的任务列表；如果使用asyncio.as_completed(tasks)则会按完成顺序生成协程的迭代器(常用于for循环中)，因此当你用它迭代时，会尽快得到每个可用的结果。【此外，当轮询到某个事件时(如taskIO_1())，直到遇到该任务中的yield from中断，开始处理下一个事件(如taskIO_2()))，当yield from后面的子生成器完成任务时，该事件才再次被唤醒】</li>
 <li><p>await用来代替yield from</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">taskIO_1</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'开始运行IO任务1...'</span>)</span><br><span class="line">    <span class="keyword">await</span> asyncio.sleep(<span class="number">2</span>)  <span class="comment"># 假设该任务耗时2s</span></span><br><span class="line">    print(<span class="string">'IO任务1已完成，耗时2s'</span>)</span><br><span class="line">    <span class="keyword">return</span> taskIO_1.__name__</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">taskIO_2</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'开始运行IO任务2...'</span>)</span><br><span class="line">    <span class="keyword">await</span> asyncio.sleep(<span class="number">3</span>)  <span class="comment"># 假设该任务耗时3s</span></span><br><span class="line">    print(<span class="string">'IO任务2已完成，耗时3s'</span>)</span><br><span class="line">    <span class="keyword">return</span> taskIO_2.__name__</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span> <span class="comment"># 调用方</span></span><br><span class="line">    tasks = [taskIO_1(), taskIO_2()]  <span class="comment"># 把所有任务添加到task中</span></span><br><span class="line">    done,pending = <span class="keyword">await</span> asyncio.wait(tasks) <span class="comment"># 子生成器</span></span><br><span class="line">    <span class="keyword">for</span> r <span class="keyword">in</span> done: <span class="comment"># done和pending都是一个任务，所以返回结果需要逐个调用result()</span></span><br><span class="line">        print(<span class="string">'协程无序返回值：'</span>+r.result())</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    start = time.time()</span><br><span class="line">    loop = asyncio.get_event_loop() <span class="comment"># 创建一个事件循环对象loop</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        loop.run_until_complete(main()) <span class="comment"># 完成事件循环，直到最后一个任务结束</span></span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        loop.close() <span class="comment"># 结束事件循环</span></span><br><span class="line">    print(<span class="string">'所有IO任务总耗时%.5f秒'</span> % float(time.time()-start))</span><br></pre></td></tr></table></figure>
 </li>
@@ -900,6 +895,13 @@
 
 
   
+  
+
+  
+  
+
+  
+
 
 
 

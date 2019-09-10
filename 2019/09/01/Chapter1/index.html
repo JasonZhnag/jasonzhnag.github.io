@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="Toheart">
 <meta property="og:description" content="名词解释 ALU arithmetic/logic unit 算术逻辑部件 IR 指令寄存器 MAR 存储器地址寄存器 MDR 存储器数据寄存器 GPRs 通用寄存器组">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-10T08:53:50.730Z">
+<meta property="og:updated_time" content="2019-09-10T09:26:33.745Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【CSAPP】 Chapter 1">
 <meta name="twitter:description" content="名词解释 ALU arithmetic/logic unit 算术逻辑部件 IR 指令寄存器 MAR 存储器地址寄存器 MDR 存储器数据寄存器 GPRs 通用寄存器组">
@@ -389,7 +389,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-09-10 16:53:50" itemprop="dateModified" datetime="2019-09-10T16:53:50+08:00">2019-09-10</time>
+                <time title="Modified: 2019-09-10 17:26:33" itemprop="dateModified" datetime="2019-09-10T17:26:33+08:00">2019-09-10</time>
               </span>
             
           
@@ -867,6 +867,60 @@
 
 
   
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
 
 
 

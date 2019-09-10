@@ -94,18 +94,18 @@
   };
 </script>
 
-  <meta name="description" content="基本操作 FromParentTo指来自父亲的指针  非递归版遍历  先序遍历  一直沿最左路深入，一路上将右子树推入栈">
+  <meta name="description" content="基本操作 FromParentTo指来自父亲的指针 非递归版遍历  先序遍历  一直沿最左路深入，一路上将右子树推入栈">
 <meta name="keywords" content="DSA笔记,二叉树">
 <meta property="og:type" content="article">
 <meta property="og:title" content="二叉树">
 <meta property="og:url" content="http://yoursite.com/2019/08/27/二叉树/index.html">
 <meta property="og:site_name" content="Toheart">
-<meta property="og:description" content="基本操作 FromParentTo指来自父亲的指针  非递归版遍历  先序遍历  一直沿最左路深入，一路上将右子树推入栈">
+<meta property="og:description" content="基本操作 FromParentTo指来自父亲的指针 非递归版遍历  先序遍历  一直沿最左路深入，一路上将右子树推入栈">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-09-01T08:25:58.357Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="二叉树">
-<meta name="twitter:description" content="基本操作 FromParentTo指来自父亲的指针  非递归版遍历  先序遍历  一直沿最左路深入，一路上将右子树推入栈">
+<meta name="twitter:description" content="基本操作 FromParentTo指来自父亲的指针 非递归版遍历  先序遍历  一直沿最左路深入，一路上将右子树推入栈">
 
 
 
@@ -444,8 +444,7 @@
 
       
         <h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><ul>
-<li><p>FromParentTo指来自父亲的指针</p>
-</li>
+<li>FromParentTo指来自父亲的指针</li>
 <li><p>非递归版遍历</p>
 <ul>
 <li><p>先序遍历</p>
@@ -470,7 +469,6 @@
 <ul>
 <li>访问该节点，遍历右兄弟子树，回溯到祖先</li>
 <li>最高左侧可见叶节点<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; <span class="comment">//在以S栈顶节点为根的子树中，找到最高左侧可见叶节点</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">gotoHLVFL</span> <span class="params">( Stack&lt;BinNodePosi(T)&gt;&amp; S )</span> </span>&#123; <span class="comment">//沿途所遇节点依次入栈</span></span><br><span class="line">   <span class="keyword">while</span> ( BinNodePosi(T) x = S.top() ) <span class="comment">//自顶而下，反复检查当前节点（即栈顶）</span></span><br><span class="line">      <span class="keyword">if</span> ( HasLChild ( *x ) ) &#123; <span class="comment">//尽可能向左</span></span><br><span class="line">         <span class="keyword">if</span> ( HasRChild ( *x ) ) S.push ( x-&gt;rc ); <span class="comment">//若有右孩子，优先入栈</span></span><br><span class="line">         S.push ( x-&gt;lc ); <span class="comment">//然后才转至左孩子</span></span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="comment">//实不得已</span></span><br><span class="line">         S.push ( x-&gt;rc ); <span class="comment">//才向右</span></span><br><span class="line">   S.pop(); <span class="comment">//返回之前，弹出栈顶的空节点</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> VST&gt;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">travPost_I</span> <span class="params">( BinNodePosi(T) x, VST&amp; visit )</span> </span>&#123; <span class="comment">//二叉树的后序遍历（迭代版）</span></span><br><span class="line">   Stack&lt;BinNodePosi(T)&gt; S; <span class="comment">//辅助栈</span></span><br><span class="line">   <span class="keyword">if</span> ( x ) S.push ( x ); <span class="comment">//根节点入栈</span></span><br><span class="line">   <span class="keyword">while</span> ( !S.empty() ) &#123;</span><br><span class="line">      <span class="keyword">if</span> ( S.top() != x-&gt;parent ) <span class="comment">//若栈顶非当前节点之父（则必为其右兄），此时需</span></span><br><span class="line">         gotoHLVFL ( S ); <span class="comment">//在以其右兄为根之子树中，找到HLVFL（相当于递归深入其中）</span></span><br><span class="line">      x = S.pop(); visit ( x-&gt;data ); <span class="comment">//弹出栈顶（即前一节点之后继），并访问之</span></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 </li>
 </ul>
 </li>
@@ -489,8 +487,7 @@
 <li>Huffman编码树</li>
 </ul>
 <h2 id="二叉搜索树"><a href="#二叉搜索树" class="headerlink" title="二叉搜索树"></a>二叉搜索树</h2><ul>
-<li><p>中序遍历单调非降</p>
-</li>
+<li>中序遍历单调非降</li>
 <li><p>二叉平衡搜索树</p>
 <ul>
 <li><p>AVL树</p>
@@ -502,19 +499,16 @@
 </li>
 <li><p>三连同侧/子孙异侧</p>
 </li>
-<li><p>重平衡后g高度不变，不会继续传导</p>
-</li>
+<li>重平衡后g高度不变，不会继续传导</li>
 </ul>
 </li>
-<li><p>删除操作</p>
-<ul>
+<li>删除操作<ul>
 <li>单旋 三连同侧</li>
 <li>双旋 子孙异侧</li>
 </ul>
 </li>
 <li><p>3 + 4重平衡</p>
  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; BinNodePosi(T) BST&lt;T&gt;::connect34 (</span><br><span class="line">   BinNodePosi(T) a, BinNodePosi(T) b, BinNodePosi(T) c,</span><br><span class="line">   BinNodePosi(T) T0, BinNodePosi(T) T1, BinNodePosi(T) T2, BinNodePosi(T) T3</span><br><span class="line">) &#123;</span><br><span class="line">   <span class="comment">//*DSA*/print(a); print(b); print(c); printf("\n");</span></span><br><span class="line">   a-&gt;lc = T0; <span class="keyword">if</span> ( T0 ) T0-&gt;parent = a;</span><br><span class="line">   a-&gt;rc = T1; <span class="keyword">if</span> ( T1 ) T1-&gt;parent = a; updateHeight ( a );</span><br><span class="line">   c-&gt;lc = T2; <span class="keyword">if</span> ( T2 ) T2-&gt;parent = c;</span><br><span class="line">   c-&gt;rc = T3; <span class="keyword">if</span> ( T3 ) T3-&gt;parent = c; updateHeight ( c );</span><br><span class="line">   b-&gt;lc = a; a-&gt;parent = b;</span><br><span class="line">   b-&gt;rc = c; c-&gt;parent = b; updateHeight ( b );</span><br><span class="line">   <span class="keyword">return</span> b; <span class="comment">//该子树新的根节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt; BinNodePosi(T) BST&lt;T&gt;::rotateAt ( BinNodePosi(T) v ) &#123; <span class="comment">//v为非空孙辈节点</span></span><br><span class="line">   <span class="comment">/*DSA*/</span><span class="keyword">if</span> ( !v ) &#123; <span class="built_in">printf</span> ( <span class="string">"\a\nFail to rotate a null node\n"</span> ); <span class="built_in">exit</span> ( <span class="number">-1</span> ); &#125;</span><br><span class="line">   BinNodePosi(T) p = v-&gt;parent; BinNodePosi(T) g = p-&gt;parent; <span class="comment">//视v、p和g相对位置分四种情况</span></span><br><span class="line">   <span class="keyword">if</span> ( IsLChild ( *p ) ) <span class="comment">/* zig */</span></span><br><span class="line">      <span class="keyword">if</span> ( IsLChild ( *v ) ) &#123; <span class="comment">/* zig-zig */</span> <span class="comment">//*DSA*/printf("\tzIg-zIg: ");</span></span><br><span class="line">         p-&gt;parent = g-&gt;parent; <span class="comment">//向上联接</span></span><br><span class="line">         <span class="keyword">return</span> connect34 ( v, p, g, v-&gt;lc, v-&gt;rc, p-&gt;rc, g-&gt;rc );</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123; <span class="comment">/* zig-zag */</span>  <span class="comment">//*DSA*/printf("\tzIg-zAg: ");</span></span><br><span class="line">         v-&gt;parent = g-&gt;parent; <span class="comment">//向上联接</span></span><br><span class="line">         <span class="keyword">return</span> connect34 ( p, v, g, p-&gt;lc, v-&gt;lc, v-&gt;rc, g-&gt;rc );</span><br><span class="line">      &#125;</span><br><span class="line">   <span class="keyword">else</span>  <span class="comment">/* zag */</span></span><br><span class="line">      <span class="keyword">if</span> ( IsRChild ( *v ) ) &#123; <span class="comment">/* zag-zag */</span> <span class="comment">//*DSA*/printf("\tzAg-zAg: ");</span></span><br><span class="line">         p-&gt;parent = g-&gt;parent; <span class="comment">//向上联接</span></span><br><span class="line">         <span class="keyword">return</span> connect34 ( g, p, v, g-&gt;lc, p-&gt;lc, v-&gt;lc, v-&gt;rc );</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123; <span class="comment">/* zag-zig */</span>  <span class="comment">//*DSA*/printf("\tzAg-zIg: ");</span></span><br><span class="line">         v-&gt;parent = g-&gt;parent; <span class="comment">//向上联接</span></span><br><span class="line">         <span class="keyword">return</span> connect34 ( g, v, p, g-&gt;lc, v-&gt;lc, v-&gt;rc, p-&gt;rc );</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>完整代码</p>
@@ -921,6 +915,13 @@
 
 
   
+  
+
+  
+  
+
+  
+
 
 
 

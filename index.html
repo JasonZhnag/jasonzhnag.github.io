@@ -375,7 +375,7 @@
                 
               
 
-              <time title="Created: 2019-09-10 00:00:00 / Modified: 16:53:59" itemprop="dateCreated datePublished" datetime="2019-09-10T00:00:00+08:00">2019-09-10</time>
+              <time title="Created: 2019-09-10 00:00:00 / Modified: 19:16:01" itemprop="dateCreated datePublished" datetime="2019-09-10T00:00:00+08:00">2019-09-10</time>
             </span>
           
 
@@ -446,16 +446,7 @@
 <li>sign extension 零扩展</li>
 <li>truncate 截断</li>
 <li>arithmetic 运算</li>
-<li>rounding 舍入<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2></li>
-<li>真值和机器数<ul>
-<li>机器数 01序列</li>
-<li>真值 真正的值</li>
-</ul>
-</li>
-<li>数据表示三要素<ul>
-<li>进位计数制</li>
-<li>定、浮点表示</li>
-<li>如何用二进制编码
+<li>rounding 舍入
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -467,7 +458,7 @@
           <!--/noindex-->
         
       
-    </li></ul></li></ul></div>
+    </li></ul></div>
 
     
 
@@ -753,7 +744,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-09-10 16:53:50" itemprop="dateModified" datetime="2019-09-10T16:53:50+08:00">2019-09-10</time>
+                <time title="Modified: 2019-09-10 17:26:33" itemprop="dateModified" datetime="2019-09-10T17:26:33+08:00">2019-09-10</time>
               </span>
             
           
@@ -995,8 +986,7 @@
       
         
           <h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><ul>
-<li><p>FromParentTo指来自父亲的指针</p>
-</li>
+<li>FromParentTo指来自父亲的指针</li>
 <li><p>非递归版遍历</p>
 <ul>
 <li><p>先序遍历</p>
@@ -1545,13 +1535,11 @@
       
         
           <h1 id="从yield到异步IO"><a href="#从yield到异步IO" class="headerlink" title="从yield到异步IO"></a>从yield到异步IO</h1><h2 id="yield理解"><a href="#yield理解" class="headerlink" title="yield理解"></a>yield理解</h2><ul>
-<li><p>迭代器</p>
-<ul>
+<li>迭代器<ul>
 <li>有next()方法的对象会前进到下一结果。</li>
 </ul>
 </li>
-<li><p>生成器</p>
-<ul>
+<li>生成器<ul>
 <li>含yield会被特地编译为生成器，当函数被调用时，返回一个生成器对象，生成器函数在生成值后会挂起并暂停</li>
 <li>next即为跳入函数中继续迭代，send则为跳入函数并将值传到yield所在的位置
           <!--noindex-->
@@ -1896,6 +1884,78 @@
 
 
   
+  
+
+  
+  
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
 
 
 
