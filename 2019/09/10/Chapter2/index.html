@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="Toheart">
 <meta property="og:description" content="名词解释 hexadecimal 十六进制 word size 字长 precision 精度 cast 强制类型转换 argument 声明 mask 掩码 two’s complement encoding 补码 sign extension 零扩展 truncate 截断 arithmetic 运算 rounding 舍入">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-10T11:16:01.458Z">
+<meta property="og:updated_time" content="2019-09-10T11:23:15.229Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【CSAPP】 Chapter 2">
 <meta name="twitter:description" content="名词解释 hexadecimal 十六进制 word size 字长 precision 精度 cast 强制类型转换 argument 声明 mask 掩码 two’s complement encoding 补码 sign extension 零扩展 truncate 截断 arithmetic 运算 rounding 舍入">
@@ -374,7 +374,7 @@
                 
               
 
-              <time title="Created: 2019-09-10 00:00:00 / Modified: 19:16:01" itemprop="dateCreated datePublished" datetime="2019-09-10T00:00:00+08:00">2019-09-10</time>
+              <time title="Created: 2019-09-10 00:00:00 / Modified: 19:23:15" itemprop="dateCreated datePublished" datetime="2019-09-10T00:00:00+08:00">2019-09-10</time>
             </span>
           
 
@@ -445,7 +445,9 @@
 <li>truncate 截断</li>
 <li>arithmetic 运算</li>
 <li>rounding 舍入<a id="more"></a>
-<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2></li>
+</li>
+</ul>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><ul>
 <li>真值和机器数<ul>
 <li>机器数 01序列</li>
 <li>真值 真正的值</li>
@@ -454,9 +456,11 @@
 <li>数据表示三要素<ul>
 <li>进位计数制</li>
 <li>定、浮点表示</li>
-<li>如何用二进制编码<h2 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h2></li>
+<li>如何用二进制编码</li>
 </ul>
 </li>
+</ul>
+<h2 id="进制转换"><a href="#进制转换" class="headerlink" title="进制转换"></a>进制转换</h2><ul>
 <li>R进制 权为$R^i$</li>
 <li>八进制 Octal/十六进制 Hexadecimal</li>
 <li>十与R转换<ul>
@@ -464,15 +468,12 @@
 <li>快法 用现成的$2^i$对应的十进制数</li>
 </ul>
 </li>
-<li>R-&gt;十 按权展开<h2 id="布尔运算"><a href="#布尔运算" class="headerlink" title="布尔运算"></a>布尔运算</h2><blockquote>
-<p>Problem 2.14</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">boor_oxr</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> result = _____;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</blockquote>
-</li>
+<li>R-&gt;十 按权展开</li>
 </ul>
 </li>
 </ul>
-<blockquote>
+<h2 id="布尔运算"><a href="#布尔运算" class="headerlink" title="布尔运算"></a>布尔运算</h2><blockquote>
+<p>Problem 2.14<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">boor_oxr</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> result = _____;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>bis(x, y)指y为1的地方x为1，bic指y为1的地方x为0<br>$x\bigoplus y =(x\bigotimes \overline{y})\mid (y\bigotimes \overline{x})$<br> <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">result = bis(bic(x, y), bic(y, x));a</span><br></pre></td></tr></table></figure></p>
 </blockquote>
 <ul>
@@ -487,9 +488,11 @@
 <li>M(mantissa)为X的尾数，二进制定点小数</li>
 <li>E(exponent)为X的指数，二进制定点小数</li>
 <li>R(radix)为基数</li>
-<li>只要表示SME，就能确定X<h2 id="定点数编码表示"><a href="#定点数编码表示" class="headerlink" title="定点数编码表示"></a>定点数编码表示</h2></li>
+<li>只要表示SME，就能确定X</li>
 </ul>
 </li>
+</ul>
+<h2 id="定点数编码表示"><a href="#定点数编码表示" class="headerlink" title="定点数编码表示"></a>定点数编码表示</h2><ul>
 <li>原码<ul>
 <li>缺点<ul>
 <li>0表示不唯一</li>
@@ -522,15 +525,19 @@
 </ul>
 </li>
 <li>补码快速算法<ul>
-<li>从右到左遇到第一个1的前面各位取反<h2 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h2></li>
+<li>从右到左遇到第一个1的前面各位取反</li>
 </ul>
 </li>
 </ul>
 </li>
+</ul>
+<h2 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h2><ul>
 <li>大小比较<ul>
-<li>有无则比较类型为无符号<h2 id="扩展与截断"><a href="#扩展与截断" class="headerlink" title="扩展与截断"></a>扩展与截断</h2></li>
+<li>有无则比较类型为无符号</li>
 </ul>
 </li>
+</ul>
+<h2 id="扩展与截断"><a href="#扩展与截断" class="headerlink" title="扩展与截断"></a>扩展与截断</h2><ul>
 <li>补码扩展<ul>
 <li>复制最高位<ul>
 <li>$B2T_{w+1} = B2T_w$</li>
@@ -540,21 +547,20 @@
 </li>
 <li>补码截断<ul>
 <li>直接截断<ul>
-<li>$B2T_k=U2T_k(B2T_wmod2^k)$<h2 id="整数运算"><a href="#整数运算" class="headerlink" title="整数运算"></a>整数运算</h2></li>
+<li>$B2T_k=U2T_k(B2T_wmod2^k)$</li>
 </ul>
 </li>
 </ul>
 </li>
+</ul>
+<h2 id="整数运算"><a href="#整数运算" class="headerlink" title="整数运算"></a>整数运算</h2><ul>
 <li>加法<ul>
-<li>$x+^t_wy=U2T_w(T2U_w(x)+^u_wT2U_w(y))=U2T_w[(x+y)mod2^w]$<blockquote>
-<p><b>Problem 2.30 写出判断加法溢出的函数</b><br></p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">tadd_ok</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = x + y;</span><br><span class="line">  <span class="keyword">int</span> neg_over = x &lt; <span class="number">0</span> &amp;&amp; y &lt; <span class="number">0</span> &amp;&amp; sum &gt;= <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> pos_over = x &gt;= <span class="number">0</span> &amp;&amp; y &gt;= <span class="number">0</span> &amp;&amp; sum &lt; <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> !neg_over &amp;&amp; !pos_over;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</blockquote>
-</li>
+<li>$x+^t_wy=U2T_w(T2U_w(x)+^u_wT2U_w(y))=U2T_w[(x+y)mod2^w]$</li>
 </ul>
 </li>
 </ul>
 <blockquote>
+<p><b>Problem 2.30 写出判断加法溢出的函数</b><br><br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">tadd_ok</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> sum = x + y;</span><br><span class="line">  <span class="keyword">int</span> neg_over = x &lt; <span class="number">0</span> &amp;&amp; y &lt; <span class="number">0</span> &amp;&amp; sum &gt;= <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">int</span> pos_over = x &gt;= <span class="number">0</span> &amp;&amp; y &gt;= <span class="number">0</span> &amp;&amp; sum &lt; <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">return</span> !neg_over &amp;&amp; !pos_over;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>Problem 2.31 为什么调用tadd_ok(x, -y)判断减法溢出会有Bug<br>When y is TMin, -y also equals to TMin, tsub_ok(x, TMin) will yield 0 when x is nagative and 1 when it is nonnegative.</p>
 </blockquote>
 <ul>
@@ -572,11 +578,13 @@
 <li>$2^i$<ul>
 <li>$x&lt;0$时，直接除会错误地向下舍入，需要移位</li>
 <li>$(x+(1&lt;<k)-1)>&gt;k$</k)-1)></li>
-<li>原理 $(x/y)<em>上=((x+y-1)/y)</em>下，设$$x=qy+r$，$((x+y-1)/y)<em>下=q+((r+y-1)/y)</em>上$，此时y整除x时得q，否则得q+1<h2 id="浮点数表示——科学计数法"><a href="#浮点数表示——科学计数法" class="headerlink" title="浮点数表示——科学计数法"></a>浮点数表示——科学计数法</h2></li>
+<li>原理 $(x/y)<em>上=((x+y-1)/y)</em>下，设$$x=qy+r$，$((x+y-1)/y)<em>下=q+((r+y-1)/y)</em>上$，此时y整除x时得q，否则得q+1</li>
 </ul>
 </li>
 </ul>
 </li>
+</ul>
+<h2 id="浮点数表示——科学计数法"><a href="#浮点数表示——科学计数法" class="headerlink" title="浮点数表示——科学计数法"></a>浮点数表示——科学计数法</h2><ul>
 <li>$\sum_{k=-j}^ib_k\times 2^k$</li>
 <li>$(-1)^s\times M\times 2^E$</li>
 <li>32位浮点数<ul>
@@ -665,9 +673,11 @@
 </ul>
 </li>
 <li>类型转换<ul>
-<li>float/double转int向0舍入<h2 id="非数值数据的编码表示"><a href="#非数值数据的编码表示" class="headerlink" title="非数值数据的编码表示"></a>非数值数据的编码表示</h2></li>
+<li>float/double转int向0舍入</li>
 </ul>
 </li>
+</ul>
+<h2 id="非数值数据的编码表示"><a href="#非数值数据的编码表示" class="headerlink" title="非数值数据的编码表示"></a>非数值数据的编码表示</h2><ul>
 <li>逻辑数据的编码表示<ul>
 <li>用一位表示</li>
 </ul>
@@ -679,21 +689,24 @@
 <li>汉字及国际字符的编码表示<ul>
 <li>输入码、内码、输出码</li>
 <li>$国标码=区位码+20_H$</li>
-<li>$内码=国标码每个字节头都变成1$<h2 id="数据宽度与存储单位"><a href="#数据宽度与存储单位" class="headerlink" title="数据宽度与存储单位"></a>数据宽度与存储单位</h2></li>
+<li>$内码=国标码每个字节头都变成1$</li>
 </ul>
 </li>
+</ul>
+<h2 id="数据宽度与存储单位"><a href="#数据宽度与存储单位" class="headerlink" title="数据宽度与存储单位"></a>数据宽度与存储单位</h2><ul>
 <li>数据基本宽度<ul>
 <li>字与字长<ul>
-<li>字长 数据通路的宽度<h2 id="字节排列"><a href="#字节排列" class="headerlink" title="字节排列"></a>字节排列</h2></li>
+<li>字长 数据通路的宽度</li>
 </ul>
 </li>
 </ul>
 </li>
+</ul>
+<h2 id="字节排列"><a href="#字节排列" class="headerlink" title="字节排列"></a>字节排列</h2><ul>
 <li>大端方式 MSB所在的地址是数的地址</li>
-<li>小端方式 LSB…<h2 id="数据在内存中的形式"><a href="#数据在内存中的形式" class="headerlink" title="数据在内存中的形式"></a>数据在内存中的形式</h2>```C++<br>// p用来表示地址，x用来表示16进制数据<br>typedef unsigned char *Pointer<br>void show_bytes(Pointer start, size_t len)<br>{<br>  size_t i;<br>  for(i = 0; i &lt; len; i++)<pre><code>printf(&quot;%p\t0x%.2x\n&quot;, start+i, start[i]);
-</code></pre>  printf(“\n”);<br>}</li>
+<li>小端方式 LSB…</li>
 </ul>
-
+<h2 id="数据在内存中的形式"><a href="#数据在内存中的形式" class="headerlink" title="数据在内存中的形式"></a>数据在内存中的形式</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// p用来表示地址，x用来表示16进制数据</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="keyword">char</span> *Pointer</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">show_bytes</span><span class="params">(Pointer start, <span class="keyword">size_t</span> len)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; len; i++)</span><br><span class="line">      <span class="built_in">printf</span>(<span class="string">"%p\t0x%.2x\n"</span>, start+i, start[i]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
