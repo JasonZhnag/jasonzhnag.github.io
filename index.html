@@ -330,6 +330,174 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/14/learn_git/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Toheart">
+      <meta itemprop="description" content="北斗酌美酒，劝龙各一觞。">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Toheart">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/09/14/learn_git/" class="post-title-link" itemprop="url">A Note for Git</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-09-14 00:00:00 / Modified: 23:19:48" itemprop="dateCreated datePublished" datetime="2019-09-14T00:00:00+08:00">2019-09-14</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="本地仓库"><a href="#本地仓库" class="headerlink" title="本地仓库"></a>本地仓库</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line"><span class="comment"># 初始化仓库</span></span><br><span class="line"></span><br><span class="line">git add learn_git.md</span><br><span class="line"><span class="comment"># 加入缓存</span></span><br><span class="line"></span><br><span class="line">git rm --cached</span><br><span class="line"><span class="comment"># 移除add的缓存</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># warning: LF will be replaced by CRLF in learn_git.md.</span></span><br><span class="line"><span class="comment"># The file will have its original line endings in your working directory.</span></span><br><span class="line"><span class="comment"># Windows和*nix的\r\n问题，Windows下忽略即可</span></span><br><span class="line"></span><br><span class="line">git commit -m <span class="string">"first command"</span></span><br><span class="line"><span class="comment"># 提交</span></span><br><span class="line"></span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line"><span class="comment"># 查看所有产生的commit记录</span></span><br><span class="line"></span><br><span class="line">git <span class="built_in">log</span> --author=bob</span><br><span class="line"></span><br><span class="line">git <span class="built_in">log</span> --graph --online --decorate --all</span><br><span class="line"></span><br><span class="line">git branch</span><br><span class="line"><span class="comment"># 查看当前分支</span></span><br><span class="line"></span><br><span class="line">git branch a</span><br><span class="line"><span class="comment"># 团队合作时建立不同分支，最后合起来，默认master</span></span><br><span class="line"></span><br><span class="line">git checkout a</span><br><span class="line"><span class="comment"># 切换到a分支</span></span><br><span class="line"></span><br><span class="line">git checkout -b a</span><br><span class="line"><span class="comment"># 新建+切换</span></span><br><span class="line"></span><br><span class="line">git branch -d a</span><br><span class="line"><span class="comment"># 删除分支</span></span><br><span class="line"></span><br><span class="line">git branch -D a</span><br><span class="line"><span class="comment"># 未合并仍要强制删除</span></span><br><span class="line"></span><br><span class="line">git tag v1.0</span><br><span class="line"><span class="comment"># 新建标签</span></span><br><span class="line"></span><br><span class="line">git tag</span><br><span class="line"><span class="comment"># 历史tag记录，checkout可切换</span></span><br></pre></td></tr></table></figure>
+<h2 id="Git-with-GitHub"><a href="#Git-with-GitHub" class="headerlink" title="Git with GitHub"></a>Git with GitHub</h2><ul>
+<li>SSH<br>SSH是一种网络加密协议，需要使用SSH公钥来进行授权。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">" "</span></span><br><span class="line">git config --global user.email &amp;quot;邮箱</span><br><span class="line"><span class="comment"># 设置用户名和邮箱，出现在commit记录里</span></span><br><span class="line"></span><br><span class="line">ssh -keygen -t rsa</span><br><span class="line"><span class="comment"># 指定rsa算法生成密钥，把生成的公钥添加到GitHub上</span></span><br><span class="line"></span><br><span class="line">ssh -T git@github.com</span><br><span class="line"><span class="comment"># 测试是否添加成功</span></span><br><span class="line"></span><br><span class="line">git pull origin master</span><br><span class="line"></span><br><span class="line">git push origin master</span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> git@github.com:balabala/test.git</span><br><span class="line"><span class="comment"># 从github上clone</span></span><br><span class="line"></span><br><span class="line">git remote add origin git@...</span><br><span class="line"><span class="comment"># origin是名字，git@...是地址</span></span><br><span class="line"></span><br><span class="line">git config --global alias.xx xx</span><br><span class="line"><span class="comment"># 别名，加快速度</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/10/Chapter2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1637,7 +1805,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1691,7 +1859,9 @@
         
           
         
-        <span class="site-state-item-count">8</span>
+          
+        
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">tags</span>
         </a>
       </div>
@@ -1888,6 +2058,8 @@
 
   
   
+    
+      
     
       
         
